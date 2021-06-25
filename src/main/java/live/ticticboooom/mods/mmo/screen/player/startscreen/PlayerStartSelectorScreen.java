@@ -1,16 +1,10 @@
 package live.ticticboooom.mods.mmo.screen.player.startscreen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import live.ticticboooom.mods.mmo.MMOMod;
 import live.ticticboooom.mods.mmo.api.client.gui.ModularContainerScreen;
 import live.ticticboooom.mods.mmo.screen.modules.CenteredTextModule;
-import live.ticticboooom.mods.mmo.screen.modules.player.startscreen.PlayerClassSelector;
-import live.ticticboooom.mods.mmo.screen.modules.player.startscreen.PlayerCoreStatDisplay;
-import live.ticticboooom.mods.mmo.screen.modules.player.startscreen.PlayerEntityRenderModule;
-import live.ticticboooom.mods.mmo.screen.modules.player.startscreen.PlayerRacePickerModule;
-import net.minecraft.client.Minecraft;
+import live.ticticboooom.mods.mmo.screen.modules.player.startscreen.*;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class PlayerStartSelectorScreen extends ModularContainerScreen<PlayerStartSelectorContainer> {
@@ -21,6 +15,8 @@ public class PlayerStartSelectorScreen extends ModularContainerScreen<PlayerStar
         super(cont, inv, titleIn);
         this.cont = cont;
         this.inv = inv;
+        this.getModules().add(new SidePanelModule(() -> this.guiLeft + 210, () -> 15, this));
+        this.getModules().add(new SidePanelModule(() -> this.guiLeft - 130, () -> 15, this));
         this.getModules().add(new CenteredTextModule(() -> this.guiLeft - 130 + 50, () -> 25, this, "Racial Origin"));
         this.getModules().add(new CenteredTextModule(() -> this.guiLeft - 130 + 50, () -> 50, this, "Dominant"));
         this.getModules().add(new CenteredTextModule(() -> this.guiLeft - 130 + 50, () -> 100, this, "Sub Dominant"));
@@ -35,31 +31,10 @@ public class PlayerStartSelectorScreen extends ModularContainerScreen<PlayerStar
 
         this.getModules().add(new CenteredTextModule(() -> this.guiLeft + 260, () -> 75, this, "Starting Stats"));
         this.getModules().add(new PlayerCoreStatDisplay(() -> this.guiLeft + 210, () -> 100, this, cont::getAttr));
-    }
-
-    public static final ResourceLocation GUI_PARTS = new ResourceLocation(MMOMod.ID, "textures/gui/guiparts_1.png");
-
-
-    @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-    }
-
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        this.renderBackground(matrixStack);
-        renderSidePanels(matrixStack);
-        super.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, x, y);
+        this.getModules().add(new CompleteSelectionButton(() -> this.guiLeft + 13, () -> 210, this));
     }
 
     @Override
     protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-    }
-
-    private void renderSidePanels(MatrixStack stack) {
-        Minecraft.getInstance().textureManager.bindTexture(GUI_PARTS);
-        this.blit(stack, this.guiLeft + 210, 15, 0, 0, 103, 223);
-        this.blit(stack, this.guiLeft - 130, 15, 0, 0, 103, 223);
     }
 }

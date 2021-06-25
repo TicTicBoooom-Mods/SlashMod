@@ -1,8 +1,10 @@
 package live.ticticboooom.mods.mmo;
 
 import live.ticticboooom.mods.mmo.cap.CapabilityEventListener;
+import live.ticticboooom.mods.mmo.cap.ModCapabilityEventListener;
 import live.ticticboooom.mods.mmo.command.CommandRegistryListener;
 import live.ticticboooom.mods.mmo.listener.InputListener;
+import live.ticticboooom.mods.mmo.listener.stat.level.HuntingLevelStatListener;
 import live.ticticboooom.mods.mmo.registry.MMORegistryEvent;
 import live.ticticboooom.mods.mmo.screen.player.startscreen.PlayerStartSelectorScreen;
 import live.ticticboooom.mods.mmo.setup.ModContainerTypes;
@@ -26,10 +28,12 @@ public class MMOMod {
     public MMOMod() {
         MinecraftForge.EVENT_BUS.register(new CommandRegistryListener());
         MinecraftForge.EVENT_BUS.register(new CapabilityEventListener());
+        MinecraftForge.EVENT_BUS.register(new HuntingLevelStatListener());
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.register(new MMORegistryEvent());
         modEventBus.register(new ModRegistrar());
         modEventBus.addListener(MMOMod::onClientSetup);
+        modEventBus.register(new ModCapabilityEventListener());
         MinecraftForge.EVENT_BUS.register(new InputListener());
         ModContainerTypes.CONTAINERS.register(modEventBus);
     }

@@ -3,10 +3,12 @@ package live.ticticboooom.mods.mmo.setup;
 import live.ticticboooom.mods.mmo.MMOMod;
 import live.ticticboooom.mods.mmo.api.classes.PlayerClass;
 import live.ticticboooom.mods.mmo.api.race.PlayerRace;
-import live.ticticboooom.mods.mmo.api.stat.PlayerCoreStatType;
-import live.ticticboooom.mods.mmo.playerdata.classes.*;
-import live.ticticboooom.mods.mmo.playerdata.races.*;
-import live.ticticboooom.mods.mmo.playerdata.stattype.*;
+import live.ticticboooom.mods.mmo.api.stat.core.PlayerCoreStatType;
+import live.ticticboooom.mods.mmo.api.stat.level.PlayerLevelStatType;
+import live.ticticboooom.mods.mmo.stat.core.classes.*;
+import live.ticticboooom.mods.mmo.stat.core.races.*;
+import live.ticticboooom.mods.mmo.stat.core.stattype.*;
+import live.ticticboooom.mods.mmo.stat.level.stattype.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -45,5 +47,14 @@ public class ModRegistrar {
         event.getRegistry().register(new MagePlayerClass().setRegistryName(new ResourceLocation(MMOMod.ID, "mage")));
         event.getRegistry().register(new PriestPlayerClass().setRegistryName(new ResourceLocation(MMOMod.ID, "priest")));
         event.getRegistry().register(new NecromancerPlayerClass().setRegistryName(new ResourceLocation(MMOMod.ID, "necromancer")));
+    }
+
+    @SubscribeEvent
+    public void registerLevelStats(RegistryEvent.Register<PlayerLevelStatType> event) {
+        event.getRegistry().register(new ExplorationLevelStatType().setRegistryName(new ResourceLocation(MMOMod.ID, "exploration")));
+        event.getRegistry().register(new HuntingLevelStatType().setRegistryName(new ResourceLocation(MMOMod.ID, "hunting")));
+        event.getRegistry().register(new QuestingLevelStatType().setRegistryName(new ResourceLocation(MMOMod.ID, "questing")));
+        event.getRegistry().register(new FishingLevelStatType().setRegistryName(new ResourceLocation(MMOMod.ID, "fishing")));
+        event.getRegistry().register(new EnchantingLevelStatType().setRegistryName(new ResourceLocation(MMOMod.ID, "enchanting")));
     }
 }

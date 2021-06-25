@@ -21,6 +21,7 @@ public class ModularContainerScreen<T extends Container> extends ContainerScreen
 
     @Override
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        this.renderBackground(matrixStack);
         for (AbstractGuiModule module : modules) {
             module.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, x, y);
         }
